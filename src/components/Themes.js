@@ -15,11 +15,11 @@ export default function Themes() {
           onChange={toggleTheme}
           checked={theme === "dark"}
           offColor="#181818"
-          onColor="#f0e68c"
-          // checkedIcon={false}
-          checkedIcon="🌞"
-          // uncheckedIcon={false}
-          uncheckedIcon="🌔"
+          onColor="#f5dfa8"
+          offHandleColor="#f5dfa8"
+          onHandleColor="#181818"
+          checkedIcon={false}
+          uncheckedIcon={false}
         />
       </div>
     </div>
