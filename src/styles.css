@@ -2,17 +2,34 @@
 @import url("https://fonts.googleapis.com/css2?family=Pacifico&display=swap");
 
 :root {
+  /* dark */
   --body-color: white;
   --body-background-color: #181818;
   --sidebar-background-color: #101010;
   --sidebar-button-color: white;
   --sidebar-border-color: #202020;
   --sidebar-menu-item-color: #282828;
-  --heading-color: khaki;
-  --button-background-color: #121212;
+  --heading-color: #f0e68c;
+  --input-background-color: #121212;
   --input-focus-color: #232323;
-  --hover-color: #626262;
+  --hover-color: orange;
   --line-color: white;
+  --empty-color: #333333;
+}
+
+#light {
+  --body-color: black;
+  --body-background-color: #f5dfa8;
+  --sidebar-background-color: #dfcb9a;
+  --sidebar-button-color: black;
+  --sidebar-border-color: #ac9c76;
+  --sidebar-menu-item-color: #fff2ae;
+  --heading-color: #521452;
+  --input-background-color: white;
+  --input-focus-color: #fff2ae;
+  --hover-color: #9d51ac;
+  --line-color: black;
+  --empty-color: #b4a873;
 }
 
 * {
@@ -21,12 +38,7 @@
   box-sizing: border-box;
   font-family: "Mouse Memoirs", sans-serif;
   letter-spacing: 2px;
-  font-size: 12px;
-}
-
-body {
-  background-color: var(--body-background-color);
-  color: var(--body-color);
+  font-size: 14px;
 }
 
 .app {
@@ -34,6 +46,8 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  background-color: var(--body-background-color);
+  color: var(--body-color);
 }
 
 /* Todo section */
@@ -57,16 +71,20 @@ body {
   margin-bottom: 2rem;
 }
 
+.save-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
 .save-input {
   font-size: 1.5rem;
   margin-bottom: 1rem;
   background: none;
   border: none;
   text-align: center;
-  /* color: white; */
   border-radius: 1rem;
-  background-color: var(--button-background-color);
-  /* width: 100%; */
+  background-color: var(--input-background-color);
+  width: 100%;
 }
 
 .user-input {
@@ -78,7 +96,7 @@ body {
   font-size: 1.5rem;
   width: 100%;
   border-radius: 1rem;
-  background-color: var(--button-background-color);
+  background-color: var(--input-background-color);
 }
 
 .top input:focus {
@@ -159,6 +177,7 @@ body {
   margin-top: 5rem;
   font-size: 1.3rem;
   animation: appear 0.5s ease-in-out;
+  color: var(--empty-color);
 }
 
 .tasks-container {
@@ -182,7 +201,7 @@ body {
 .line {
   position: absolute;
   height: 5px;
-  bottom: 35%;
+  bottom: 50%;
   left: -0.5rem;
   background-color: var(--line-color);
   transition: width 0.3s;
@@ -281,14 +300,23 @@ body {
 }
 
 .remove-btn:hover {
-  color: salmon;
+  /* color: #dfdf8a; */
+  color: var(--hover-color);
   animation: button-hover 600ms ease-in-out infinite;
 }
 
-.dark-mode-wrapper {
+.theme-mode-wrapper {
   height: 100px;
-  background-color: red;
+  /* background-color: red; */
   text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+}
+
+.theme-mode-wrapper h2 {
+  margin-bottom: 5px;
 }
 
 @keyframes appear {
@@ -328,7 +356,6 @@ body {
   100% {
     transform: rotate(20deg) scale(1);
   }
-
 }
 
 @media screen and (min-width: 600px) {
@@ -346,5 +373,14 @@ body {
 
   .remove-btn {
     margin-right: 4rem;
+  }
+
+  .theme-mode-wrapper h2 {
+    margin-bottom: 10px;
+  }
+
+  .line {
+    bottom: 35%;
+    left: -0.5rem;
   }
 }

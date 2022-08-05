@@ -1,9 +1,9 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
-import {v4 as uuid} from "uuid";
+import { v4 as uuid } from "uuid";
 
-import DarkMode from "./DarkMode";
+import Themes from "./Themes";
 
 export default function SideBar(props) {
   return (
@@ -23,16 +23,17 @@ export default function SideBar(props) {
               }}
             >
               <div className="menu-item">{menuName}</div>
-              <button className="remove-btn" onClick={() => props.remove(menuName)}>
+              <button
+                className="remove-btn"
+                onClick={() => props.remove(menuName)}
+              >
                 <FontAwesomeIcon icon={faTrash} size="lg" />
               </button>
             </div>
           );
         })}
       </div>
-      <div className="dark-mode-wrapper">
-        <DarkMode />
-      </div>
+      <Themes />
     </nav>
   );
 }

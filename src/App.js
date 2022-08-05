@@ -1,13 +1,11 @@
 import React from "react";
-import { useState, useEffect } from "react";
-// import uuid from "react-uuid";
+import { useState, useEffect, createContext } from "react";
 import { v4 as uuid } from "uuid";
 
 // TODO: REFACTOR THIS UGLY PIECE OF C*DE!!!!!
 // TODO: Find convenient solution to unique id/key
 // TODO: add some basic validation
 // TODO: localstorage is randomly pushing objects cuz it can, so i have to fix this somehow
-// TODO: find reason why appearing animation is sometimes not working
 
 import UserInput from "./components/UserInput";
 import TodoList from "./components/TodoList";
@@ -15,15 +13,18 @@ import SideBar from "./components/SideBar";
 import Save from "./components/Save";
 import CloseButton from "./components/CloseButton";
 
+export const ThemeContext = createContext(null);
+
 function App() {
   const [todoList, setTodoList] = useState([]);
   const [newTask, setNewTask] = useState("");
   const [toDelete, setToDelete] = useState([]);
-  // const [id, setId] = useState(0);
   const [display, setDisplay] = useState(false);
   const [name, setName] = useState("");
   const [storageList, setStorageList] = useState([]);
   const [currentListName, setCurrentListName] = useState("");
+
+  const [theme, setTheme] = useState("dark");
 
   // User input
   const handleInputChange = (event) => {
@@ -47,7 +48,7 @@ function App() {
         document.getElementById(`${item.id}`).querySelector(".line").style =
           "width: 0;";
         if (task.id === item.id) {
-          console.log(`filtered: ${task.id}, to delete: ${item.id}`)
+          console.log(`filtered: ${task.id}, to delete: ${item.id}`);
         }
         return task.id === item.id;
       });
@@ -78,7 +79,7 @@ function App() {
       event.target.setAttribute("data-done", "true");
     } else {
       event.target.querySelector(".line").style = "width: 0;";
-      event.target.style = "color: white";
+      event.target.style = "color: inherit";
       setToDelete((current) =>
         current.filter((obj) => {
           return obj.id !== targetId;
@@ -90,9 +91,9 @@ function App() {
 
   const handleClear = () => {
     setCurrentListName("");
-    document.getElementById("save").value="";
-    document.getElementById("task").value="";
-    document.getElementById("list-title").textContent="";
+    document.getElementById("save").value = "";
+    document.getElementById("task").value = "";
+    document.getElementById("list-title").textContent = "";
     setTodoList([]);
     // setId(0);
   };
@@ -182,6 +183,10 @@ function App() {
     }
   };
 
+  const toggleTheme = () => {
+    setTheme((current) => (current === "dark" ? "light" : "dark"));
+  };
+
   useEffect(() => {
     document.addEventListener("keydown", handleEnterPress);
 
@@ -193,41 +198,45 @@ function App() {
   useEffect(() => {
     saveLocalList(currentListName);
     if (todoList.length === 0) {
-      removeLocalList(currentListName)
+      removeLocalList(currentListName);
     }
   }, [todoList]);
 
   return (
-    <div className="app">
-      <CloseButton showSideBar={showSideBar} />
-      <SideBar
-        menuStorage={storageList}
-        getLocal={getLocalList}
-        current={displayCurrentList}
-        remove={removeLocalList}
-        changeSaveName={setName}
-      />
+    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+      <div className="app" id={theme}>
+        <CloseButton showSideBar={showSideBar} />
+        <SideBar
+          menuStorage={storageList}
+          getLocal={getLocalList}
+          current={displayCurrentList}
+          remove={removeLocalList}
+          changeSaveName={setName}
+        />
 
-      <div id="todo-wrapper" className="wrapper">
-        <div className="top">
-          <h1 className="section-header">TODO:</h1>
-          <Save
-            nameChange={handleNameChange}
-            value={name}
-            save={handleSave}
-            focus={handleFocus}
-          />
+        <div id="todo-wrapper" className="wrapper">
+          <div className="top">
+            <h1 className="section-header">TODO:</h1>
+            <div className="input-wrapper">
+              <Save
+                nameChange={handleNameChange}
+                value={name}
+                save={handleSave}
+                focus={handleFocus}
+              />
 
-          <UserInput
-            inputChange={handleInputChange}
-            add={handleAddTask}
-            del={handleDeleteTask}
-            clear={handleClear}
-          />
+              <UserInput
+                inputChange={handleInputChange}
+                add={handleAddTask}
+                del={handleDeleteTask}
+                clear={handleClear}
+              />
+            </div>
+          </div>
+          <TodoList list={todoList} clickIsDone={handleIsDone} />
         </div>
-        <TodoList list={todoList} clickIsDone={handleIsDone} />
       </div>
-    </div>
+    </ThemeContext.Provider>
   );
 }
 

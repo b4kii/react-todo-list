@@ -1,5 +1,4 @@
 import React from "react";
-import {v4 as uuid} from "uuid";
 
 export default function TodoList(props) {
   return (
@@ -10,9 +9,6 @@ export default function TodoList(props) {
         props.list.length === 0 ? (
           <div
             className="empty"
-            style={{
-              color: "#333333",
-            }}
           >
             Nothing is here..
           </div>
@@ -21,8 +17,7 @@ export default function TodoList(props) {
             item.task != null &&
             <div
               data-done="false"
-              key={item.task + item.id}
-              // key={item.id}
+              key={item.id}
               id={item.id}
               className="task"
               onClick={props.clickIsDone}
