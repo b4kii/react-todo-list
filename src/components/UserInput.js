@@ -13,14 +13,27 @@ export default function TodoList(props) {
         placeholder="Task.."
       />
       <div className="btn-wrapper">
-        <button id="btn" className="task-btn add" onClick={props.add}>
+        <button
+          id="btn"
+          className="task-btn add"
+          onClick={props.add}
+          aria-label="Add task"
+        >
           {/* [+] */}
-          <FontAwesomeIcon icon={faPlusSquare}  size="2xl" />
+          <FontAwesomeIcon icon={faPlusSquare} size="2xl" />
         </button>
-        <button className="task-btn delete" onClick={props.del}>
+        <button
+          className="task-btn delete"
+          onClick={props.del}
+          aria-label="Delete task"
+        >
           <FontAwesomeIcon icon={faMinusSquare} size="2xl" />
         </button>
-        <button className="task-btn clear" onClick={props.clear}>
+        <button
+          className="task-btn clear"
+          onClick={props.clear}
+          aria-label="Clear"
+        >
           <FontAwesomeIcon icon={faDeleteLeft} size="2xl" />
         </button>
       </div>

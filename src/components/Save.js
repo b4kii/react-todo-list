@@ -19,6 +19,7 @@ export default function Save(props) {
           onClick={() => {
             props.save();
           }}
+          aria-label="Save list"
         >
           <FontAwesomeIcon icon={faFloppyDisk} size="2xl" />
         </button>

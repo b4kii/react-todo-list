@@ -3,7 +3,6 @@ import { useState, useEffect, createContext } from "react";
 import { v4 as uuid } from "uuid";
 
 // TODO: REFACTOR THIS UGLY PIECE OF C*DE!!!!!
-// TODO: Find convenient solution to unique id/key
 // TODO: add some basic validation
 // TODO: localstorage is randomly pushing objects cuz it can, so i have to fix this somehow
 

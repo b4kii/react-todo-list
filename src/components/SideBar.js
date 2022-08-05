@@ -26,6 +26,7 @@ export default function SideBar(props) {
               <button
                 className="remove-btn"
                 onClick={() => props.remove(menuName)}
+                aria-label="Remove list"
               >
                 <FontAwesomeIcon icon={faTrash} size="lg" />
               </button>
