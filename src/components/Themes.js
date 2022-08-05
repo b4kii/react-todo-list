@@ -1,10 +1,7 @@
 import React, { useContext } from "react";
-import TogglButton from "react-toggle-button";
 import ReactSwitch from "react-switch";
 
 import { ThemeContext } from "../App";
-
-import { useState } from "react";
 
 export default function Themes() {
   const { theme, toggleTheme } = useContext(ThemeContext);
@@ -19,8 +16,10 @@ export default function Themes() {
           checked={theme === "dark"}
           offColor="#181818"
           onColor="#f0e68c"
-          checkedIcon={false}
-          uncheckedIcon={false}
+          // checkedIcon={false}
+          checkedIcon="🌞"
+          // uncheckedIcon={false}
+          uncheckedIcon="🌔"
         />
       </div>
     </div>
