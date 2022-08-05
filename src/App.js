@@ -200,7 +200,7 @@ function App() {
     if (todoList.length === 0) {
       removeLocalList(currentListName);
     }
-  }, [todoList]);
+  }, [todoList]); // :(
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
