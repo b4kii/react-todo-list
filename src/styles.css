@@ -13,8 +13,10 @@
   --input-background-color: #121212;
   --input-focus-color: #232323;
   --hover-color: orange;
+  --hovert-task-color: grey;
   --line-color: white;
   --empty-color: #333333;
+  --isdone-color: grey;
 }
 
 #light {
@@ -28,8 +30,10 @@
   --input-background-color: white;
   --input-focus-color: #fff2ae;
   --hover-color: #9d51ac;
+  --hover-task-color: grey;
   --line-color: black;
   --empty-color: #b4a873;
+  --isdone-color: grey;
 }
 
 * {
@@ -106,7 +110,7 @@
 }
 
 .task:hover {
-  color: var(--hover-color);
+  color: var(--isdone-color) !important;
 }
 
 .task-btn,

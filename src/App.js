@@ -65,20 +65,18 @@ function App() {
 
   const handleIsDone = (event) => {
     let isDone = event.target.getAttribute("data-done");
-    // let targetId = parseInt(event.target.id);
     let targetId = event.target.id;
-    console.log(targetId);
 
     if (isDone === "false") {
       event.target.querySelector(".line").style = "width: calc(100% + 0.8rem);";
-      event.target.style = "color: #626262";
+      event.target.style = "color: var(--isdone-color)";
       setToDelete((current) => {
         return [...current, { id: targetId }];
       });
       event.target.setAttribute("data-done", "true");
     } else {
       event.target.querySelector(".line").style = "width: 0;";
-      event.target.style = "color: inherit";
+      event.target.style = "color: var(--body-color)";
       setToDelete((current) =>
         current.filter((obj) => {
           return obj.id !== targetId;

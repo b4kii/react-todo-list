@@ -9,8 +9,6 @@ export default function Themes() {
     <div className="theme-mode-wrapper">
       <h2>Color mode: </h2>
       <div className="theme-button">
-        {/* 🌞 */}
-        {/* 🌙	 */}
         <ReactSwitch
           onChange={toggleTheme}
           checked={theme === "dark"}
