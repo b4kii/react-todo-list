@@ -18,7 +18,7 @@ export default function Save(props) {
           className="save-btn"
           onClick={() => {
             props.save();
-            props.value === "" && props.showMessage();
+            props.showMessage();
           }}
           aria-label="Save list"
         >

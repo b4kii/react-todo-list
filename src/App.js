@@ -13,6 +13,7 @@ import Save from "./components/Save";
 import CloseButton from "./components/CloseButton";
 
 export const ThemeContext = createContext(null);
+// export const StateContext = createContext(null); // testing
 
 function App() {
   const [todoList, setTodoList] = useState([]);
@@ -53,9 +54,6 @@ function App() {
         document.getElementById(`${item.id}`).setAttribute("data-done", false);
         document.getElementById(`${item.id}`).querySelector(".line").style =
           "width: 0;";
-        if (task.id === item.id) {
-          console.log(`filtered: ${task.id}, to delete: ${item.id}`);
-        }
         return task.id === item.id;
       });
     });
@@ -127,19 +125,19 @@ function App() {
   };
 
   // Saving list
-  const saveLocalList = (name) => {
-    if (name !== "") {
-      localStorage.setItem(name, JSON.stringify([...todoList]));
+  const saveLocalList = (menuName) => {
+    if (menuName !== "") {
+      localStorage.setItem(menuName, JSON.stringify([...todoList]));
     }
   };
 
-  const getLocalList = (name) => {
-    const data = JSON.parse(localStorage.getItem(name));
+  const getLocalList = (menuName) => {
+    const data = JSON.parse(localStorage.getItem(menuName));
     return data;
   };
 
-  const removeLocalList = (name) => {
-    localStorage.removeItem(name);
+  const removeLocalList = (menuName) => {
+    localStorage.removeItem(menuName);
     document.getElementById("list-title").textContent = "";
     getLocalStorage();
   };
@@ -157,7 +155,6 @@ function App() {
     const list = getLocalList(menuName);
     if (list === null) setTodoList([]);
     else {
-      // setTodoList([]); // idk
       setTodoList(list);
     }
     setCurrentListName(menuName);
@@ -182,11 +179,7 @@ function App() {
       getLocalStorage();
       setTodoList([]);
     }
-    // else {
-    //   // taskInput.value = "";
-    //   setName(""); // testing
-    //   setMessage("Cannot save!");
-    // }
+
     if (name === "") {
       setMessage("Provide list name!");
     }
@@ -207,6 +200,7 @@ function App() {
   };
 
   const showMessage = () => {
+    console.log(message);
     document.getElementById("message").style = "top: 5%; opacity: 1;";
     setTimeout(() => {
       document.getElementById("message").style = "opacity: 0";
