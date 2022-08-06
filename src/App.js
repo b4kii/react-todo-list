@@ -6,6 +6,8 @@ import { v4 as uuid } from "uuid";
 // TODO: Add some basic validation
 // TODO: Local storage is randomly pushing objects cuz it can, so i have to fix this somehow
 // TODO: Try to save one item called menu with its submenus instead of multiple items in local storage
+// TODO: Saving theme is crap, as everything here, have to prevent flash of dark theme on initial render
+// TODO: Have to fix message display, cuz its only changing text and not appearing each time while changed
 
 import UserInput from "./components/UserInput";
 import TodoList from "./components/TodoList";
@@ -132,6 +134,8 @@ function App() {
   };
 
   const removeLocalList = (menuName) => {
+    setMessage(`Removed: ${menuName}`);
+    showMessage();
     localStorage.removeItem(menuName);
     document.getElementById("list-title").textContent = "";
     // setMessage(`Removed: "${menuName}"`);
@@ -140,9 +144,11 @@ function App() {
 
   const getLocalStorage = () => {
     const keys = Object.keys(localStorage);
-    setStorageList(() => keys.filter((key) => {
-      return key !== "theme";
-    }));
+    setStorageList(() =>
+      keys.filter((key) => {
+        return key !== "theme";
+      })
+    );
     // setStorageList(keys);
   };
 
@@ -218,7 +224,10 @@ function App() {
 
   useEffect(() => {
     saveLocalList(currentListName);
-    if (todoList.length === 0) {
+    // if (todoList.length === 0) {
+    //   removeLocalList(currentListName);
+    // }
+    if (todoList.length === 0 && currentListName !== "") {
       removeLocalList(currentListName);
     }
   }, [todoList]); // :(
