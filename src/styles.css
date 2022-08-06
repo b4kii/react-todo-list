@@ -170,7 +170,7 @@
 
 .list-title {
   text-align: center;
-  font-size: 2rem;
+  font-size: 3rem;
   text-transform: uppercase;
 }
 
@@ -223,7 +223,7 @@
   cursor: pointer;
   z-index: 2;
   padding: 10px;
-  transition: 200ms ease-in-out;
+  transition: all 200ms ease-in-out;
 }
 
 .hamburger-wrapper {
@@ -302,6 +302,7 @@
   background: none;
   color: var(--body-color);
   border: none;
+  z-index: 3;
 }
 
 .remove-btn:hover {
@@ -339,6 +340,7 @@
   text-align: center;
   transition: all 200ms ease-in-out;
   opacity: 0;
+  z-index: 1;
 }
 
 @keyframes appear {

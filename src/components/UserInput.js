@@ -37,7 +37,10 @@ export default function TodoList(props) {
         </button>
         <button
           className="task-btn clear"
-          onClick={props.clear}
+          onClick={() => {
+            props.clear();
+            props.showMessage();
+          }}
           aria-label="Clear"
         >
           <FontAwesomeIcon icon={faDeleteLeft} size="2xl" />

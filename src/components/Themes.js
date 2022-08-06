@@ -11,11 +11,11 @@ export default function Themes() {
       <div className="theme-button">
         <ReactSwitch
           onChange={toggleTheme}
-          checked={theme === "dark"}
-          offColor="#181818"
-          onColor="#f5dfa8"
-          offHandleColor="#f5dfa8"
-          onHandleColor="#181818"
+          checked={theme !== "dark"}
+          offColor="#f5dfa8"
+          onColor="#181818"
+          offHandleColor="#181818"
+          onHandleColor="#f5dfa8"
           checkedIcon={false}
           uncheckedIcon={false}
         />

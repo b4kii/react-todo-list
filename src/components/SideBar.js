@@ -9,25 +9,28 @@ export default function SideBar(props) {
   return (
     <nav id="sidebar" className="sidebar-menu">
       <div className="menu-wrapper">
-        <h1 className="section-header"> Saved lists </h1>
+        <h1 className="section-header"> Saved lists: </h1>
         {props.menuStorage.map((menuName) => {
           return (
             <div
               id={uuid()}
               className="menu-item-wrapper"
-              key={uuid()} // i know that it's changing every render, but dunno how much of an impact does it has
-              onClick={() => {
+              key={uuid()}
+              onClick={(e) => {
                 props.current(menuName);
-                document.getElementById("list-title").textContent = menuName;
+                props.setMessage(`Selected: ${menuName}`);
+                props.showMessage();
+                document.getElementById("list-title").textContent = `${menuName}:`;
               }}
             >
               <div className="menu-item">{menuName}</div>
               <button
                 className="remove-btn"
-                onClick={() => {
-                  props.remove(menuName)
+                onClick={(e) => {
+                  e.stopPropagation();
                   props.setMessage(`Removed: "${menuName}"`);
                   props.showMessage();
+                  props.remove(menuName)
                 }}
                 aria-label="Remove list"
               >

@@ -3,8 +3,9 @@ import { useState, useEffect, createContext } from "react";
 import { v4 as uuid } from "uuid";
 
 // TODO: REFACTOR THIS UGLY PIECE OF C*DE!!!!!
-// TODO: add some basic validation
-// TODO: localstorage is randomly pushing objects cuz it can, so i have to fix this somehow
+// TODO: Add some basic validation
+// TODO: Local storage is randomly pushing objects cuz it can, so i have to fix this somehow
+// TODO: Try to save one item called menu with its submenus instead of multiple items in local storage
 
 import UserInput from "./components/UserInput";
 import TodoList from "./components/TodoList";
@@ -19,13 +20,14 @@ function App() {
   const [todoList, setTodoList] = useState([]);
   const [newTask, setNewTask] = useState("");
   const [toDelete, setToDelete] = useState([]);
-  const [display, setDisplay] = useState(false);
-  const [name, setName] = useState("");
+  const [displaySidebar, setDisplaySidebar] = useState(false);
+  const [menuName, setMenuName] = useState("");
   const [storageList, setStorageList] = useState([]);
   const [currentListName, setCurrentListName] = useState("");
   const [message, setMessage] = useState("");
 
-  const [theme, setTheme] = useState("dark");
+  // const [theme, setTheme] = useState("dark");
+  const [theme, setTheme] = useState("");
 
   // User input
   const handleInputChange = (event) => {
@@ -33,18 +35,11 @@ function App() {
   };
 
   const handleAddTask = () => {
-    // const taskInput = document.getElementById("task");
-
-    // if (taskInput.value !== "") {
     if (newTask !== "") {
-      // testing
       setTodoList((current) => [...current, { task: newTask, id: uuid() }]);
     } else {
-      // console.log("Add task!");
       setMessage("Add task!");
     }
-    // setId((previous) => previous + 1);
-    // taskInput.value = "";
     setNewTask(""); // testing
   };
 
@@ -93,26 +88,26 @@ function App() {
 
   const handleClear = () => {
     setCurrentListName("");
-    // document.getElementById("save").value = "";
-    setName(""); //testing
-    // document.getElementById("task").value = "";
+    setMenuName(""); //testing
     setNewTask(""); // testing
+    setMessage("Cleared!");
     document.getElementById("list-title").textContent = "";
     setTodoList([]);
-    // setId(0);
   };
 
   // Sidebar
   const showSideBar = () => {
-    if (display) {
+    if (displaySidebar) {
       document.getElementById("sidebar").style = "width: 0;";
+
       //Button animation
       document.getElementById("first-block").style = "transform: rotate(0) ";
       document.getElementById("second-block").style = "transform: rotate(0) ";
       document.getElementById("hamburger").style = "transform: translateX(0);";
-      setDisplay((current) => !current);
+      setDisplaySidebar((current) => !current);
     } else {
       document.getElementById("sidebar").style = "width: 500px;";
+
       //Button animation
       document.getElementById("first-block").style =
         "transform: rotate(45deg) translateY(9px)";
@@ -120,7 +115,7 @@ function App() {
         "transform: rotate(-45deg) translateY(-9px)";
       document.getElementById("hamburger").style =
         "transform: translateX(7px);";
-      setDisplay((current) => !current);
+      setDisplaySidebar((current) => !current);
     }
   };
 
@@ -145,11 +140,14 @@ function App() {
 
   const getLocalStorage = () => {
     const keys = Object.keys(localStorage);
-    setStorageList(keys);
+    setStorageList(() => keys.filter((key) => {
+      return key !== "theme";
+    }));
+    // setStorageList(keys);
   };
 
   const handleNameChange = (event) => {
-    setName(event.target.value);
+    setMenuName(event.target.value);
   };
 
   const displayCurrentList = (menuName) => {
@@ -162,27 +160,18 @@ function App() {
   };
 
   const handleSave = () => {
-    const nameInput = document.getElementById("save");
-    const taskInput = document.getElementById("task");
-
-    // if (nameInput.value !== "" && todoList.length !== 0) {
-    if (name !== "" && todoList.length !== 0) {
-      // testing
-      // saveLocalList(nameInput.value);
-      saveLocalList(name); // testing
-      // nameInput.value = "";
-      // taskInput.value = "";
+    if (menuName !== "" && todoList.length !== 0) {
+      saveLocalList(menuName); // testing
       setNewTask(""); // testing
-      setName(""); // testing
+      setMenuName(""); // testing
 
-      // setMessage("Saved successfully!");
-      setMessage(`Saved: ${name}`);
+      setMessage(`Saved: ${menuName}`);
 
       getLocalStorage();
       setTodoList([]);
     }
 
-    if (name === "") {
+    if (menuName === "") {
       setMessage("Provide list name!");
     }
     if (todoList.length === 0) {
@@ -197,12 +186,7 @@ function App() {
     }
   };
 
-  const toggleTheme = () => {
-    setTheme((current) => (current === "dark" ? "light" : "dark"));
-  };
-
   const showMessage = () => {
-    console.log(message);
     document.getElementById("message").style = "top: 1rem; opacity: 1;";
     setTimeout(() => {
       console.log("Timeout");
@@ -210,10 +194,24 @@ function App() {
     }, 1000);
   };
 
+  const toggleTheme = () => {
+    setTheme((current) => (current === "dark" ? "light" : "dark"));
+    localStorage.setItem("theme", theme === "dark" ? "light" : "dark");
+  };
+
   useEffect(() => {
     document.addEventListener("keydown", handleEnterPress);
-
     getLocalStorage();
+
+    // Saving theme
+    let getDefaultTheme = localStorage.getItem("theme");
+    console.log("local", localStorage.getItem("theme"));
+    if (!getDefaultTheme) {
+      localStorage.setItem("theme", "dark");
+      getDefaultTheme = localStorage.getItem("theme");
+      setTheme(getDefaultTheme);
+    }
+    setTheme(getDefaultTheme);
 
     return () => document.removeEventListener("keydown", handleEnterPress);
   }, []);
@@ -234,7 +232,7 @@ function App() {
           getLocal={getLocalList}
           current={displayCurrentList}
           remove={removeLocalList}
-          changeSaveName={setName}
+          changeSaveName={setMenuName}
           showMessage={showMessage}
           setMessage={setMessage}
         />
@@ -245,7 +243,7 @@ function App() {
             <div className="input-wrapper">
               <Save
                 nameChange={handleNameChange}
-                value={name} // testing
+                value={menuName} // testing
                 save={handleSave}
                 focus={handleFocus}
                 showMessage={showMessage}
