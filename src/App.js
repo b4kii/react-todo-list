@@ -22,6 +22,7 @@ function App() {
   const [name, setName] = useState("");
   const [storageList, setStorageList] = useState([]);
   const [currentListName, setCurrentListName] = useState("");
+  const [message, setMessage] = useState("");
 
   const [theme, setTheme] = useState("dark");
 
@@ -31,13 +32,19 @@ function App() {
   };
 
   const handleAddTask = () => {
-    const taskInput = document.getElementById("task");
+    // const taskInput = document.getElementById("task");
 
-    if (taskInput.value !== "") {
+    // if (taskInput.value !== "") {
+    if (newTask !== "") {
+      // testing
       setTodoList((current) => [...current, { task: newTask, id: uuid() }]);
+    } else {
+      // console.log("Add task!");
+      setMessage("Add task!");
     }
     // setId((previous) => previous + 1);
-    taskInput.value = "";
+    // taskInput.value = "";
+    setNewTask(""); // testing
   };
 
   const handleDeleteTask = () => {
@@ -88,8 +95,10 @@ function App() {
 
   const handleClear = () => {
     setCurrentListName("");
-    document.getElementById("save").value = "";
-    document.getElementById("task").value = "";
+    // document.getElementById("save").value = "";
+    setName(""); //testing
+    // document.getElementById("task").value = "";
+    setNewTask(""); // testing
     document.getElementById("list-title").textContent = "";
     setTodoList([]);
     // setId(0);
@@ -105,7 +114,7 @@ function App() {
       document.getElementById("hamburger").style = "transform: translateX(0);";
       setDisplay((current) => !current);
     } else {
-      document.getElementById("sidebar").style = "width: 400px;";
+      document.getElementById("sidebar").style = "width: 500px;";
       //Button animation
       document.getElementById("first-block").style =
         "transform: rotate(45deg) translateY(9px)";
@@ -119,10 +128,8 @@ function App() {
 
   // Saving list
   const saveLocalList = (name) => {
-    // const key = Date.now();
     if (name !== "") {
       localStorage.setItem(name, JSON.stringify([...todoList]));
-      // localStorage.setItem(name, JSON.stringify([...todoList, {key: key}]));
     }
   };
 
@@ -160,16 +167,31 @@ function App() {
     const nameInput = document.getElementById("save");
     const taskInput = document.getElementById("task");
 
-    if (nameInput.value !== "" && todoList.length !== 0) {
-      saveLocalList(nameInput.value);
-      // saveLocalList(name);
-      nameInput.value = "";
-      taskInput.value = "";
+    // if (nameInput.value !== "" && todoList.length !== 0) {
+    if (name !== "" && todoList.length !== 0) {
+      // testing
+      // saveLocalList(nameInput.value);
+      saveLocalList(name); // testing
+      // nameInput.value = "";
+      // taskInput.value = "";
+      setNewTask(""); // testing
+      setName(""); // testing
+
+      setMessage("Saved successfully!");
+
       getLocalStorage();
       setTodoList([]);
-    } else {
-      taskInput.value = "";
-      alert("Provide list name!");
+    }
+    // else {
+    //   // taskInput.value = "";
+    //   setName(""); // testing
+    //   setMessage("Cannot save!");
+    // }
+    if (name === "") {
+      setMessage("Provide list name!");
+    }
+    if (todoList.length === 0) {
+      setMessage("Task list is empty!");
     }
   };
 
@@ -182,6 +204,13 @@ function App() {
 
   const toggleTheme = () => {
     setTheme((current) => (current === "dark" ? "light" : "dark"));
+  };
+
+  const showMessage = () => {
+    document.getElementById("message").style = "top: 5%; opacity: 1;";
+    setTimeout(() => {
+      document.getElementById("message").style = "opacity: 0";
+    }, 1000);
   };
 
   useEffect(() => {
@@ -217,16 +246,20 @@ function App() {
             <div className="input-wrapper">
               <Save
                 nameChange={handleNameChange}
-                value={name}
+                value={name} // testing
                 save={handleSave}
                 focus={handleFocus}
+                showMessage={showMessage}
               />
 
               <UserInput
                 inputChange={handleInputChange}
+                value={newTask} // testing
                 add={handleAddTask}
                 del={handleDeleteTask}
                 clear={handleClear}
+                showMessage={showMessage}
+                message={message}
               />
             </div>
           </div>

@@ -10,7 +10,7 @@ export default function Save(props) {
           id="save"
           className="save-input"
           onChange={props.nameChange}
-          value={props.name}
+          value={props.value}
           onFocus={props.focus}
           placeholder="Name"
         />
@@ -18,6 +18,7 @@ export default function Save(props) {
           className="save-btn"
           onClick={() => {
             props.save();
+            props.value === "" && props.showMessage();
           }}
           aria-label="Save list"
         >

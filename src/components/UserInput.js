@@ -6,20 +6,26 @@ import { faPlusSquare, faMinusSquare } from "@fortawesome/free-solid-svg-icons";
 export default function TodoList(props) {
   return (
     <>
+      <div id="message" className="message">
+        {props.message}
+      </div>
       <input
         id="task"
         className="user-input"
         onChange={props.inputChange}
+        value={props.value}
         placeholder="Task.."
       />
       <div className="btn-wrapper">
         <button
           id="btn"
           className="task-btn add"
-          onClick={props.add}
+          onClick={() => {
+            props.add();
+            props.value === "" && props.showMessage();
+          }}
           aria-label="Add task"
         >
-          {/* [+] */}
           <FontAwesomeIcon icon={faPlusSquare} size="2xl" />
         </button>
         <button
