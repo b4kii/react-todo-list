@@ -26,7 +26,7 @@
   --sidebar-button-color: black;
   --sidebar-border-color: #ac9c76;
   --sidebar-menu-item-color: #fff2ae;
-  --heading-color: #521452;
+  --heading-color: #7a207a;
   --input-background-color: white;
   --input-focus-color: #fff2ae;
   --hover-color: #9d51ac;
@@ -312,12 +312,12 @@
 
 .theme-mode-wrapper {
   height: 100px;
-  /* background-color: red; */
   text-align: center;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 2rem;
+  margin-bottom: 3rem;
 }
 
 .theme-mode-wrapper h2 {
@@ -395,6 +395,10 @@
 
   .remove-btn {
     margin-right: 4rem;
+  }
+
+  .theme-mode-wrapper {
+    margin-bottom: 0;
   }
 
   .theme-mode-wrapper h2 {

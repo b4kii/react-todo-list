@@ -26,6 +26,7 @@ export default function SideBar(props) {
                 className="remove-btn"
                 onClick={() => {
                   props.remove(menuName)
+                  props.setMessage(`Removed: "${menuName}"`);
                   props.showMessage();
                 }}
                 aria-label="Remove list"

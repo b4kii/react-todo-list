@@ -139,7 +139,7 @@ function App() {
   const removeLocalList = (menuName) => {
     localStorage.removeItem(menuName);
     document.getElementById("list-title").textContent = "";
-    setMessage(`Removed: "${menuName}"`);
+    // setMessage(`Removed: "${menuName}"`);
     getLocalStorage();
   };
 
@@ -175,7 +175,8 @@ function App() {
       setNewTask(""); // testing
       setName(""); // testing
 
-      setMessage("Saved successfully!");
+      // setMessage("Saved successfully!");
+      setMessage(`Saved: ${name}`);
 
       getLocalStorage();
       setTodoList([]);
@@ -204,6 +205,7 @@ function App() {
     console.log(message);
     document.getElementById("message").style = "top: 1rem; opacity: 1;";
     setTimeout(() => {
+      console.log("Timeout");
       document.getElementById("message").style = "opacity: 0";
     }, 1000);
   };
@@ -234,6 +236,7 @@ function App() {
           remove={removeLocalList}
           changeSaveName={setName}
           showMessage={showMessage}
+          setMessage={setMessage}
         />
 
         <div id="todo-wrapper" className="wrapper">
