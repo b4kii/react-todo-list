@@ -19,13 +19,15 @@ export default function SideBar(props) {
               onClick={() => {
                 props.current(menuName);
                 document.getElementById("list-title").textContent = menuName;
-                console.log(menuName);
               }}
             >
               <div className="menu-item">{menuName}</div>
               <button
                 className="remove-btn"
-                onClick={() => props.remove(menuName)}
+                onClick={() => {
+                  props.remove(menuName)
+                  props.showMessage();
+                }}
                 aria-label="Remove list"
               >
                 <FontAwesomeIcon icon={faTrash} size="lg" />
