@@ -8,9 +8,8 @@
   --sidebar-background-color: #101010;
   --sidebar-button-color: white;
   --sidebar-border-color: #202020;
-  --sidebar-menu-item-color: #282828;
+  --sidebar-menu-item-hover-color: #282828;
   --heading-color: #f0e68c;
-  --input-background-color: #121212;
   --input-focus-color: #232323;
   --hover-color: orange;
   --hovert-task-color: grey;
@@ -22,13 +21,12 @@
 #light {
   --body-color: black;
   --body-background-color: #f5dfa8;
-  --sidebar-background-color: #dfcb9a;
+  --sidebar-background-color: #c5b385;
   --sidebar-button-color: black;
   --sidebar-border-color: #ac9c76;
-  --sidebar-menu-item-color: #fff2ae;
+  --sidebar-menu-item-hover-color: #d6cb91;
   --heading-color: red;
-  --input-background-color: #c4b48c;
-  --input-focus-color: #e0cb9a;
+  --input-focus-color: #d6c99d;
   --hover-color: salmon;
   --hover-task-color: grey;
   --line-color: black;
@@ -90,7 +88,7 @@
   text-align: center;
   border-radius: 1rem;
   color: var(--body-color);
-  background-color: var(--input-background-color);
+  background-color: var(--sidebar-background-color);
   width: 100%;
 }
 
@@ -103,7 +101,7 @@
   font-size: 1.5rem;
   width: 100%;
   border-radius: 1rem;
-  background-color: var(--input-background-color);
+  background-color: var(--sidebar-background-color);
 }
 
 .top input:focus {
@@ -295,7 +293,7 @@
 }
 
 .menu-item-wrapper:hover {
-  background-color: var(--sidebar-menu-item-color);
+  background-color: var(--sidebar-menu-item-hover-color);
 }
 
 .remove-btn {
@@ -309,7 +307,6 @@
 }
 
 .remove-btn:hover {
-  /* color: #dfdf8a; */
   color: var(--hover-color);
   animation: button-hover 600ms ease-in-out infinite;
 }
@@ -343,10 +340,10 @@
   text-align: center;
   opacity: 0;
   z-index: 1;
-  animation: test 1000ms ease-out;
+  animation: message-appear 1000ms ease-out;
 }
 
-.test {
+.square {
   width: 20px;
   transform: rotate(45deg);
   height: 20px;
@@ -359,12 +356,12 @@
   margin: auto;
 }
 
-@keyframes test {
+@keyframes message-appear {
   0% {
     opacity: 0;
   }
 
-  50% {
+  25% {
     opacity: 2;
     top: 1rem;
   }

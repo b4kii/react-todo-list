@@ -10,7 +10,7 @@ export default function TodoList(props) {
         Object.keys(props.message).length !== 0 && (
           <div id="message" className="message" key={props.message.id}>
             {props.message.msg}
-            <div className="test"></div>
+            <div className="square"></div>
           </div>
         )
       }
