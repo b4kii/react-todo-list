@@ -366,6 +366,10 @@
     top: 1rem;
   }
 
+  90% {
+    opacity: 1;
+  }
+
   100% {
     opacity: 0;
     top: 0;
