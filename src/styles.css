@@ -26,10 +26,10 @@
   --sidebar-button-color: black;
   --sidebar-border-color: #ac9c76;
   --sidebar-menu-item-color: #fff2ae;
-  --heading-color: #7a207a;
-  --input-background-color: white;
-  --input-focus-color: #fff2ae;
-  --hover-color: #9d51ac;
+  --heading-color: red;
+  --input-background-color: #c4b48c;
+  --input-focus-color: #e0cb9a;
+  --hover-color: salmon;
   --hover-task-color: grey;
   --line-color: black;
   --empty-color: #b4a873;
@@ -343,8 +343,20 @@
   text-align: center;
   opacity: 0;
   z-index: 1;
-  /* transition: top 500ms; */
   animation: test 1000ms ease-out;
+}
+
+.test {
+  width: 20px;
+  transform: rotate(45deg);
+  height: 20px;
+  background-color: var(--hover-color);
+  z-index: 1;
+  position: absolute;
+  top: -10px;
+  right: 0;
+  left: 0;
+  margin: auto;
 }
 
 @keyframes test {
