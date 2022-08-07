@@ -16,12 +16,11 @@ export default function SideBar(props) {
               id={uuid()}
               className="menu-item-wrapper"
               key={uuid()}
-              onClick={(e) => {
+              onClick={() => {
                 props.current(menuName);
-                // props.setMessage(`Selected: ${menuName}`);
                 props.setMessage({msg: `Selected: ${menuName}`, id: uuid()}) // testing
+                props.changeSaveName("");
 
-                // props.showMessage();
                 document.getElementById("list-title").textContent = `${menuName}:`;
               }}
             >

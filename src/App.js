@@ -2,9 +2,10 @@ import React from "react";
 import { useState, useEffect, createContext } from "react";
 import { v4 as uuid } from "uuid";
 
-// TODO: REFACTOR THIS UGLY PIECE OF C*DE!!!!!
-// TODO: Local storage is randomly pushing objects cuz it can, so i have to fix this somehow
-// TODO: Try to save one item called menu with its submenus instead of multiple items in local storage
+// TODO: REFACTOR THIS UGLY PIECE OF C*DE!!!!! More of context api or try redux (?). I guess for such 
+//       a small project it doesn't matter
+// TODO: Local storage is randomly pushing objects and I probably should find another solution
+//       to saving menus and items, but for now i'll focus on fixing it with the code that i have rn
 // TODO: Saving theme is crap, as everything here, have to prevent flash of dark theme on initial render
 
 import UserInput from "./components/UserInput";
@@ -14,7 +15,6 @@ import Save from "./components/Save";
 import CloseButton from "./components/CloseButton";
 
 export const ThemeContext = createContext(null);
-// export const StateContext = createContext(null); // testing
 
 function App() {
   const [todoList, setTodoList] = useState([]);
@@ -37,7 +37,7 @@ function App() {
     if (newTask !== "") {
       setTodoList((current) => [...current, { task: newTask, id: uuid() }]);
     } else {
-      setMessage({msg: "Add task!", id: uuid()}) // testing
+      setMessage({ msg: "Add task!", id: uuid() }); // testing
     }
     setNewTask("");
   };
@@ -89,13 +89,14 @@ function App() {
     setCurrentListName("");
     setMenuName("");
     setNewTask("");
-    setMessage({msg: "Cleared!", id: uuid()}) // testing
+    setMessage({ msg: "Cleared!", id: uuid() }); // testing
     document.getElementById("list-title").textContent = "";
     setTodoList([]);
   };
 
   // Sidebar
   const showSideBar = () => {
+    console.log(storageList);
     if (displaySidebar) {
       document.getElementById("sidebar").style = "width: 0;";
 
@@ -119,19 +120,19 @@ function App() {
   };
 
   // Saving list
-  const saveLocalList = (menuName) => {
+  const saveLocalTaskList = (menuName) => {
     if (menuName !== "") {
       localStorage.setItem(menuName, JSON.stringify([...todoList]));
     }
   };
 
-  const getLocalList = (menuName) => {
+  const getLocalTaskList = (menuName) => {
     const data = JSON.parse(localStorage.getItem(menuName));
     return data;
   };
 
-  const removeLocalList = (menuName) => {
-    setMessage({msg: `Removed: ${menuName}`, id: uuid()}) // testing
+  const removeLocalTaskList = (menuName) => {
+    setMessage({ msg: `Removed: ${menuName}`, id: uuid() }); // testing
     localStorage.removeItem(menuName);
     document.getElementById("list-title").textContent = "";
     getLocalStorage();
@@ -151,7 +152,7 @@ function App() {
   };
 
   const displayCurrentList = (menuName) => {
-    const list = getLocalList(menuName);
+    const list = getLocalTaskList(menuName);
     if (list === null) setTodoList([]);
     else {
       setTodoList(list);
@@ -160,22 +161,26 @@ function App() {
   };
 
   const handleSave = () => {
-    if (menuName !== "" && todoList.length !== 0) {
-      saveLocalList(menuName); // testing
+    const test = getLocalTaskList(menuName);
+
+    if (menuName !== "" && todoList.length !== 0 && test === null) {
+      saveLocalTaskList(menuName); // testing
       setNewTask(""); // testing
       setMenuName(""); // testing
-
-      setMessage({msg: `Saved: ${menuName}`, id: uuid()}) // testing
-
+      setMessage({ msg: `Saved: ${menuName}`, id: uuid() }); // testing
       getLocalStorage();
       setTodoList([]);
     }
 
+    if (test !== null) {
+      setMessage({msg: "Change list name!", id: uuid()})
+    }
+
     if (menuName === "") {
-      setMessage({msg: "Provide list name!", id: uuid()}) // testing
+      setMessage({ msg: "Provide list name!", id: uuid() }); // testing
     }
     if (todoList.length === 0) {
-      setMessage({msg: "Task list is empty!", id: uuid()}) // testing
+      setMessage({ msg: "Task list is empty!", id: uuid() }); // testing
     }
   };
 
@@ -183,7 +188,8 @@ function App() {
     if (currentListName !== "") {
       setTodoList([]);
       setCurrentListName("");
-    }
+      document.getElementById("list-title").textContent = "";
+    } 
   };
 
   const toggleTheme = () => {
@@ -197,7 +203,6 @@ function App() {
 
     // Saving theme
     let getDefaultTheme = localStorage.getItem("theme");
-    console.log("local", localStorage.getItem("theme"));
     if (!getDefaultTheme) {
       localStorage.setItem("theme", "dark");
       getDefaultTheme = localStorage.getItem("theme");
@@ -209,9 +214,9 @@ function App() {
   }, []);
 
   useEffect(() => {
-    saveLocalList(currentListName);
+    saveLocalTaskList(currentListName);
     if (todoList.length === 0 && currentListName !== "") {
-      removeLocalList(currentListName);
+      removeLocalTaskList(currentListName);
     }
   }, [todoList]);
 
@@ -221,9 +226,9 @@ function App() {
         <CloseButton showSideBar={showSideBar} />
         <SideBar
           menuStorage={storageList}
-          getLocal={getLocalList}
+          getLocal={getLocalTaskList}
           current={displayCurrentList}
-          remove={removeLocalList}
+          remove={removeLocalTaskList}
           changeSaveName={setMenuName}
           setMessage={setMessage}
         />
