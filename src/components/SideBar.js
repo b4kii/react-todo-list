@@ -18,8 +18,10 @@ export default function SideBar(props) {
               key={uuid()}
               onClick={(e) => {
                 props.current(menuName);
-                props.setMessage(`Selected: ${menuName}`);
-                props.showMessage();
+                // props.setMessage(`Selected: ${menuName}`);
+                props.setMessage({msg: `Selected: ${menuName}`, id: uuid()}) // testing
+
+                // props.showMessage();
                 document.getElementById("list-title").textContent = `${menuName}:`;
               }}
             >
@@ -27,8 +29,6 @@ export default function SideBar(props) {
               <button
                 className="remove-btn"
                 onClick={(e) => {
-                  // props.setMessage(`Removed: "${menuName}"`);
-                  // props.showMessage();
                   props.remove(menuName)
                 }}
                 aria-label="Remove list"

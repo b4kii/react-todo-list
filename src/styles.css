@@ -335,15 +335,32 @@
   color: var(--body-color);
   background-color: var(--hover-color);
   position: absolute;
-  top: 0;
+  top: -1rem;
   left: 0;
   right: 0;
   margin: 1rem auto;
   font-size: 2rem;
   text-align: center;
-  transition: all 200ms ease-in-out;
   opacity: 0;
   z-index: 1;
+  /* transition: top 500ms; */
+  animation: test 1000ms ease-out;
+}
+
+@keyframes test {
+  0% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 2;
+    top: 1rem;
+  }
+
+  100% {
+    opacity: 0;
+    top: 0;
+  }
 }
 
 @keyframes appear {

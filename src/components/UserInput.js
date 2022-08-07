@@ -6,9 +6,14 @@ import { faPlusSquare, faMinusSquare } from "@fortawesome/free-solid-svg-icons";
 export default function TodoList(props) {
   return (
     <>
-      <div id="message" className="message">
-        {props.message}
-      </div>
+      {
+        Object.keys(props.message).length !== 0 && (
+          <div id="message" className="message" key={props.message.id}>
+            {props.message.msg}
+          </div>
+        )
+      }
+
       <input
         id="task"
         className="user-input"
@@ -22,7 +27,6 @@ export default function TodoList(props) {
           className="task-btn add"
           onClick={() => {
             props.add();
-            props.value === "" && props.showMessage();
           }}
           aria-label="Add task"
         >
@@ -39,7 +43,6 @@ export default function TodoList(props) {
           className="task-btn clear"
           onClick={() => {
             props.clear();
-            props.showMessage();
           }}
           aria-label="Clear"
         >
