@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useEffect, createContext } from "react";
 import { v4 as uuid } from "uuid";
 
-// TODO: REFACTOR THIS UGLY PIECE OF C*DE!!!!! More of context api or try redux (?). I guess for such 
+// TODO: REFACTOR THIS UGLY PIECE OF C*DE!!!!! More of context api or try redux (?). I guess for such
 //       a small project it doesn't matter
 // TODO: Local storage is randomly pushing objects and I probably should find another solution
 //       to saving menus and items, but for now i'll focus on fixing it with the code that i have rn
@@ -43,17 +43,21 @@ function App() {
   };
 
   const handleDeleteTask = () => {
-    const filtered = todoList.filter((task) => {
-      return !toDelete.some((item) => {
-        document.getElementById(`${item.id}`).setAttribute("data-done", false);
-        document.getElementById(`${item.id}`).querySelector(".line").style =
-          "width: 0;";
-        return task.id === item.id;
+    if (toDelete.length > 0) {
+      const filtered = todoList.filter((task) => {
+        return !toDelete.some((item) => {
+          document.getElementById(`${item.id}`).setAttribute("data-done", false);
+          document.getElementById(`${item.id}`).querySelector(".line").style =
+            "width: 0;";
+          return task.id === item.id;
+        });
       });
-    });
 
-    setTodoList(filtered);
-    setToDelete([]);
+      setTodoList(filtered);
+      setToDelete([]);
+    } else {
+      setMessage({ msg: "Nothing to delete!", id: uuid() });
+    }
   };
 
   const handleEnterPress = (event) => {
@@ -96,7 +100,7 @@ function App() {
 
   // Sidebar
   const showSideBar = () => {
-    console.log(storageList);
+    // console.log("click");
     if (displaySidebar) {
       document.getElementById("sidebar").style = "width: 0;";
 
@@ -132,10 +136,10 @@ function App() {
   };
 
   const removeLocalTaskList = (menuName) => {
-    setMessage({ msg: `Removed: ${menuName}`, id: uuid() }); // testing
     localStorage.removeItem(menuName);
     document.getElementById("list-title").textContent = "";
     getLocalStorage();
+    setMessage({ msg: `Removed: ${currentListName}`, id: uuid() }); // testing
   };
 
   const getLocalStorage = () => {
@@ -173,7 +177,7 @@ function App() {
     }
 
     if (test !== null) {
-      setMessage({msg: "Change list name!", id: uuid()})
+      setMessage({ msg: "Change list name!", id: uuid() });
     }
 
     if (menuName === "") {
@@ -189,7 +193,7 @@ function App() {
       setTodoList([]);
       setCurrentListName("");
       document.getElementById("list-title").textContent = "";
-    } 
+    }
   };
 
   const toggleTheme = () => {
@@ -210,8 +214,21 @@ function App() {
     }
     setTheme(getDefaultTheme);
 
+
     return () => document.removeEventListener("keydown", handleEnterPress);
   }, []);
+
+  useEffect(() => {
+    const deviceWidth = window.innerWidth;
+    const todoWrapper = document.getElementById("todo-wrapper");
+    console.log("click");
+
+    if (deviceWidth < 600 && displaySidebar) {
+      todoWrapper.addEventListener("click", showSideBar);
+    }
+
+    return () => todoWrapper.removeEventListener("click", showSideBar);
+  }, [displaySidebar]);
 
   useEffect(() => {
     saveLocalTaskList(currentListName);

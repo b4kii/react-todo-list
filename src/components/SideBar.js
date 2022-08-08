@@ -18,17 +18,19 @@ export default function SideBar(props) {
               key={uuid()}
               onClick={() => {
                 props.current(menuName);
-                props.setMessage({msg: `Selected: ${menuName}`, id: uuid()}) // testing
+                props.setMessage({ msg: `Selected: ${menuName}`, id: uuid() }); // testing
                 props.changeSaveName("");
 
-                document.getElementById("list-title").textContent = `${menuName}:`;
+                document.getElementById(
+                  "list-title"
+                ).textContent = `${menuName}:`;
               }}
             >
               <div className="menu-item">{menuName}</div>
               <button
                 className="remove-btn"
                 onClick={(e) => {
-                  props.remove(menuName)
+                  props.remove(menuName);
                 }}
                 aria-label="Remove list"
               >

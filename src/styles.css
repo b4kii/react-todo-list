@@ -21,12 +21,12 @@
 #light {
   --body-color: black;
   --body-background-color: #f5dfa8;
-  --sidebar-background-color: #c5b385;
+  --sidebar-background-color: #e0c476;
   --sidebar-button-color: black;
   --sidebar-border-color: #ac9c76;
-  --sidebar-menu-item-hover-color: #d6cb91;
+  --sidebar-menu-item-hover-color: #f0d691;
   --heading-color: red;
-  --input-focus-color: #d6c99d;
+  --input-focus-color: #fcdd87;
   --hover-color: salmon;
   --hover-task-color: grey;
   --line-color: black;
@@ -187,20 +187,26 @@
 
 .tasks-container {
   display: flex;
-  justify-content: center;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   gap: 1.2rem;
+  width: 60%;
+  margin: auto;
 }
 
 .task {
   text-align: center;
-  width: max-content;
-  height: 30px;
+  max-width: max-content;
+  /* width: 100%; */
   margin: auto;
   font-size: 1.4rem;
   cursor: pointer;
   position: relative;
   animation: appear 0.5s ease-in-out;
+  /* overflow-wrap: break-word;
+  word-wrap: break-word; */
+  word-break: break-all;
 }
 
 .line {
