@@ -191,21 +191,20 @@
   justify-content: center;
   align-items: center;
   gap: 1.2rem;
-  width: 60%;
+  width: 90%;
   margin: auto;
 }
 
 .task {
   text-align: center;
   max-width: max-content;
-  /* width: 100%; */
   margin: auto;
   font-size: 1.4rem;
   cursor: pointer;
   position: relative;
   animation: appear 0.5s ease-in-out;
-  /* overflow-wrap: break-word;
-  word-wrap: break-word; */
+  overflow-wrap: break-word;
+  word-wrap: break-word;
   word-break: break-all;
 }
 
@@ -432,6 +431,10 @@
 
   .menu-item {
     margin-left: 4rem;
+  }
+
+  .tasks-container {
+    width: 60%;
   }
 
   .remove-btn {
