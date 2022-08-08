@@ -210,10 +210,12 @@
 
 .line {
   position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  margin: 0 auto;
   height: 5px;
-  /* bottom: 50%; */
-  bottom: 30%;
-  left: -0.5rem;
   background-color: var(--line-color);
   transition: width 0.3s;
   width: 0;
@@ -360,6 +362,10 @@
   right: 0;
   left: 0;
   margin: auto;
+}
+
+.gap {
+  padding: 2rem;
 }
 
 @keyframes message-appear {

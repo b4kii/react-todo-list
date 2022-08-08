@@ -12,7 +12,7 @@ export default function Save(props) {
           onChange={props.nameChange}
           value={props.value}
           onFocus={props.focus}
-          placeholder="Name"
+          placeholder="List name.."
         />
         <button
           className="save-btn"

@@ -282,6 +282,7 @@ function App() {
           </div>
           <TodoList list={todoList} clickIsDone={handleIsDone} />
         </div>
+          <div className="gap"></div>
       </div>
     </ThemeContext.Provider>
   );
