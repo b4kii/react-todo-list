@@ -46,7 +46,9 @@ function App() {
     if (toDelete.length > 0) {
       const filtered = todoList.filter((task) => {
         return !toDelete.some((item) => {
-          document.getElementById(`${item.id}`).setAttribute("data-done", false);
+          document
+            .getElementById(`${item.id}`)
+            .setAttribute("data-done", false);
           document.getElementById(`${item.id}`).querySelector(".line").style =
             "width: 0;";
           return task.id === item.id;
@@ -90,17 +92,26 @@ function App() {
   };
 
   const handleClear = () => {
-    setCurrentListName("");
-    setMenuName("");
-    setNewTask("");
-    setMessage({ msg: "Cleared!", id: uuid() }); // testing
-    document.getElementById("list-title").textContent = "";
-    setTodoList([]);
+    if (
+      currentListName === "" &&
+      menuName === "" &&
+      newTask === "" &&
+      todoList.length === 0
+    ) {
+      setMessage({ msg: "Nothing to clear!", id: uuid() }); // testing
+    } else {
+      setCurrentListName("");
+      setMenuName("");
+      setNewTask("");
+      setTodoList([]);
+      setToDelete([]);
+      document.getElementById("list-title").textContent = "";
+      setMessage({ msg: "Cleared!", id: uuid() }); // testing
+    }
   };
 
   // Sidebar
   const showSideBar = () => {
-    // console.log("click");
     if (displaySidebar) {
       document.getElementById("sidebar").style = "width: 0;";
 
@@ -214,14 +225,12 @@ function App() {
     }
     setTheme(getDefaultTheme);
 
-
     return () => document.removeEventListener("keydown", handleEnterPress);
   }, []);
 
   useEffect(() => {
     const deviceWidth = window.innerWidth;
     const todoWrapper = document.getElementById("todo-wrapper");
-    console.log("click");
 
     if (deviceWidth < 600 && displaySidebar) {
       todoWrapper.addEventListener("click", showSideBar);

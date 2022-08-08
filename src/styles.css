@@ -60,6 +60,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-align: center;
   min-height: 100vh;
 }
 
@@ -191,7 +192,6 @@
   justify-content: center;
   align-items: center;
   gap: 1.2rem;
-  width: 90%;
   margin: auto;
 }
 
@@ -211,7 +211,8 @@
 .line {
   position: absolute;
   height: 5px;
-  bottom: 50%;
+  /* bottom: 50%; */
+  bottom: 30%;
   left: -0.5rem;
   background-color: var(--line-color);
   transition: width 0.3s;
@@ -434,7 +435,7 @@
   }
 
   .tasks-container {
-    width: 60%;
+    width: 700px;
   }
 
   .remove-btn {
