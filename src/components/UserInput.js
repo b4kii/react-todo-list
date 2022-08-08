@@ -3,18 +3,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDeleteLeft } from "@fortawesome/free-solid-svg-icons";
 import { faPlusSquare, faMinusSquare } from "@fortawesome/free-solid-svg-icons";
 
-export default function TodoList(props) {
+export default function UserInput(props) {
   return (
     <>
-      {
-        Object.keys(props.message).length !== 0 && (
-          <div id="message" className="message" key={props.message.id}>
-            {props.message.msg}
-            <div className="square"></div>
-          </div>
-        )
-      }
-
       <input
         id="task"
         className="user-input"
@@ -26,9 +17,7 @@ export default function TodoList(props) {
         <button
           id="btn"
           className="task-btn add"
-          onClick={() => {
-            props.add();
-          }}
+          onClick={props.add}
           aria-label="Add task"
         >
           <FontAwesomeIcon icon={faPlusSquare} size="2xl" />
@@ -42,9 +31,7 @@ export default function TodoList(props) {
         </button>
         <button
           className="task-btn clear"
-          onClick={() => {
-            props.clear();
-          }}
+          onClick={props.clear}
           aria-label="Clear"
         >
           <FontAwesomeIcon icon={faDeleteLeft} size="2xl" />

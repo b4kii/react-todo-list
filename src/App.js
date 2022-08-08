@@ -6,12 +6,16 @@ import { v4 as uuid } from "uuid";
 //       a small project it doesn't matter
 // TODO: Local storage is randomly pushing objects and I probably should find another solution
 //       to saving menus and items, but for now i'll focus on fixing it with the code that i have rn
+// TODO: Search for some issues with "to delete" counter
+// TODO: Add footer
 
 import UserInput from "./components/UserInput";
 import TodoList from "./components/TodoList";
 import SideBar from "./components/SideBar";
 import Save from "./components/Save";
 import CloseButton from "./components/CloseButton";
+import Notification from "./components/Notification";
+import ToDeleteCount from "./components/ToDeleteCount";
 
 export const ThemeContext = createContext(null);
 
@@ -53,6 +57,13 @@ function App() {
           return task.id === item.id;
         });
       });
+
+      if (toDelete.length === 1) {
+        setMessage({msg: "Deleted task!", id: uuid()});
+      } else {
+        setMessage({msg: "Deleted tasks!", id: uuid()});
+      }
+
 
       setTodoList(filtered);
       setToDelete([]);
@@ -172,6 +183,7 @@ function App() {
       setTodoList(list);
     }
     setCurrentListName(menuName);
+    setToDelete([]);
   };
 
   const handleSave = () => {
@@ -201,6 +213,7 @@ function App() {
   const handleFocus = () => {
     if (currentListName !== "") {
       setTodoList([]);
+      setToDelete([]);
       setCurrentListName("");
       document.getElementById("list-title").textContent = "";
     }
@@ -248,6 +261,7 @@ function App() {
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
       <div className="app" id={theme}>
+        <Notification message={message} />
         <CloseButton showSideBar={showSideBar} />
         <SideBar
           menuStorage={storageList}
@@ -281,6 +295,7 @@ function App() {
           </div>
           <TodoList list={todoList} clickIsDone={handleIsDone} />
         </div>
+          <ToDeleteCount toDelete={toDelete} todoList={todoList} />
           <div className="gap"></div>
       </div>
     </ThemeContext.Provider>
