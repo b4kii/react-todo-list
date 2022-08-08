@@ -6,7 +6,6 @@ import { v4 as uuid } from "uuid";
 //       a small project it doesn't matter
 // TODO: Local storage is randomly pushing objects and I probably should find another solution
 //       to saving menus and items, but for now i'll focus on fixing it with the code that i have rn
-// TODO: Saving theme is crap, as everything here, have to prevent flash of dark theme on initial render
 
 import UserInput from "./components/UserInput";
 import TodoList from "./components/TodoList";

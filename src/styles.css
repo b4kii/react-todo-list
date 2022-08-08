@@ -339,7 +339,8 @@
   border-radius: 1rem;
   color: var(--body-color);
   background-color: var(--hover-color);
-  position: absolute;
+  /* position: absolute; */
+  position: fixed;
   top: -1rem;
   left: 0;
   right: 0;
