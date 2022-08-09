@@ -11,7 +11,7 @@ import { v4 as uuid } from "uuid";
 
 import UserInput from "./components/UserInput";
 import TodoList from "./components/TodoList";
-import SideBar from "./components/SideBar";
+import Sidebar from "./components/Sidebar";
 import Save from "./components/Save";
 import CloseButton from "./components/CloseButton";
 import Notification from "./components/Notification";
@@ -59,11 +59,10 @@ function App() {
       });
 
       if (toDelete.length === 1) {
-        setMessage({msg: "Deleted task!", id: uuid()});
+        setMessage({ msg: "Deleted task!", id: uuid() });
       } else {
-        setMessage({msg: "Deleted tasks!", id: uuid()});
+        setMessage({ msg: "Deleted tasks!", id: uuid() });
       }
-
 
       setTodoList(filtered);
       setToDelete([]);
@@ -120,27 +119,57 @@ function App() {
     }
   };
 
+  const hideSidebar = () => {
+    // document.getElementById("sidebar").style = "width: 0;";
+    document.getElementById("sidebar").style = "width: 50px; opacity: 0;";
+    document.getElementById("swipe-overlay").style = "width: 50px; z-index: 3;";
+
+    //Button animation
+    document.getElementById("first-block").style = "transform: rotate(0) ";
+    document.getElementById("second-block").style = "transform: rotate(0) ";
+    document.getElementById("hamburger").style = "transform: translateX(0);";
+  };
+
+  const showSidebar = () => {
+    // document.getElementById("sidebar").style = "width: 500px;";
+    document.getElementById("sidebar").style = "width: 500px; opacity: 1;";
+    document.getElementById("swipe-overlay").style = "width: 0; z-index: 0;";
+
+    //Button animation
+    document.getElementById("first-block").style =
+      "transform: rotate(45deg) translateY(9px)";
+    document.getElementById("second-block").style =
+      "transform: rotate(-45deg) translateY(-9px)";
+    document.getElementById("hamburger").style = "transform: translateX(7px);";
+  };
+
   // Sidebar
-  const showSideBar = () => {
+  const toggleSidebar = () => {
     if (displaySidebar) {
-      document.getElementById("sidebar").style = "width: 0;";
-
-      //Button animation
-      document.getElementById("first-block").style = "transform: rotate(0) ";
-      document.getElementById("second-block").style = "transform: rotate(0) ";
-      document.getElementById("hamburger").style = "transform: translateX(0);";
+      hideSidebar();
       setDisplaySidebar((current) => !current);
+      // // document.getElementById("sidebar").style = "width: 0;";
+      // document.getElementById("sidebar").style = "width: 50px; opacity: 0;";
+
+      // //Button animation
+      // document.getElementById("first-block").style = "transform: rotate(0) ";
+      // document.getElementById("second-block").style = "transform: rotate(0) ";
+      // document.getElementById("hamburger").style = "transform: translateX(0);";
+      // setDisplaySidebar((current) => !current);
     } else {
-      document.getElementById("sidebar").style = "width: 500px;";
-
-      //Button animation
-      document.getElementById("first-block").style =
-        "transform: rotate(45deg) translateY(9px)";
-      document.getElementById("second-block").style =
-        "transform: rotate(-45deg) translateY(-9px)";
-      document.getElementById("hamburger").style =
-        "transform: translateX(7px);";
+      showSidebar();
       setDisplaySidebar((current) => !current);
+      // // document.getElementById("sidebar").style = "width: 500px;";
+      // document.getElementById("sidebar").style = "width: 500px; opacity: 1;";
+
+      // //Button animation
+      // document.getElementById("first-block").style =
+      //   "transform: rotate(45deg) translateY(9px)";
+      // document.getElementById("second-block").style =
+      //   "transform: rotate(-45deg) translateY(-9px)";
+      // document.getElementById("hamburger").style =
+      //   "transform: translateX(7px);";
+      // setDisplaySidebar((current) => !current);
     }
   };
 
@@ -241,17 +270,6 @@ function App() {
   }, []);
 
   useEffect(() => {
-    const deviceWidth = window.innerWidth;
-    const todoWrapper = document.getElementById("todo-wrapper");
-
-    if (deviceWidth < 600 && displaySidebar) {
-      todoWrapper.addEventListener("click", showSideBar);
-    }
-
-    return () => todoWrapper.removeEventListener("click", showSideBar);
-  }, [displaySidebar]);
-
-  useEffect(() => {
     saveLocalTaskList(currentListName);
     if (todoList.length === 0 && currentListName !== "") {
       removeLocalTaskList(currentListName);
@@ -259,17 +277,21 @@ function App() {
   }, [todoList]);
 
   return (
+    // XDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
       <div className="app" id={theme}>
         <Notification message={message} />
-        <CloseButton showSideBar={showSideBar} />
-        <SideBar
+        <CloseButton toggleSidebar={toggleSidebar} />
+        <Sidebar
           menuStorage={storageList}
           getLocal={getLocalTaskList}
           current={displayCurrentList}
           remove={removeLocalTaskList}
           changeSaveName={setMenuName}
           setMessage={setMessage}
+          setDisplaySidebar={setDisplaySidebar}
+          showSidebar={showSidebar}
+          hideSidebar={hideSidebar}
         />
 
         <div id="todo-wrapper" className="wrapper">
@@ -295,8 +317,8 @@ function App() {
           </div>
           <TodoList list={todoList} clickIsDone={handleIsDone} />
         </div>
-          <ToDeleteCount toDelete={toDelete} todoList={todoList} />
-          <div className="gap"></div>
+        <ToDeleteCount toDelete={toDelete} todoList={todoList} />
+        <div className="gap"></div>
       </div>
     </ThemeContext.Provider>
   );

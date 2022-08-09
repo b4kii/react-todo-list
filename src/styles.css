@@ -257,14 +257,25 @@
   position: fixed;
   left: 0;
   top: 0;
+  width: 50px;
   max-width: 300px;
-  width: 0;
+  opacity: 0;
   overflow-x: hidden;
   white-space: nowrap;
   height: 100vh;
   background-color: var(--sidebar-background-color);
-  transition: width 0.1s ease-in-out;
+  transition: all 0.1s ease-in-out;
   z-index: 1;
+}
+
+.swipe-overlay {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 50px;
+  height: 100vh;
+  opacity: 0;
+  z-index: 3;
 }
 
 .menu-wrapper {
@@ -347,7 +358,7 @@
   font-size: 2rem;
   text-align: center;
   opacity: 0;
-  z-index: 1;
+  z-index: 3;
   animation: message-appear 1000ms ease-out;
 }
 
@@ -356,7 +367,7 @@
   transform: rotate(45deg);
   height: 20px;
   background-color: var(--hover-color);
-  z-index: 1;
+  z-index: 3;
   position: absolute;
   top: -10px;
   right: 0;
@@ -365,10 +376,10 @@
 }
 
 .gap {
-  padding: 2rem;
+  padding: 3rem;
 }
 
-.test {
+.to-delete-counter {
   display: grid;
   place-items: center;
   background-color: var(--hover-color);
@@ -385,12 +396,15 @@
 
 @keyframes fade {
   from {
-    opacity: 0;
-    transform: scale(0.9);
+    /* opacity: 0; */
+    /* transform: scale(0.9); */
+    /* transform: scale(0); */
+    bottom: -3rem;
   }
   to {
-    opacity: 1;
-    transform: scale(1);
+    /* opacity: 1; */
+    /* transform: scale(1); */
+    bottom: 0.5rem;
   }
 }
 
