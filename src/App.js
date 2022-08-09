@@ -5,8 +5,8 @@ import { v4 as uuid } from "uuid";
 // TODO: REFACTOR THIS UGLY PIECE OF C*DE!!!!! More of context api or try redux (?). I guess for such
 //       a small project it doesn't matter
 // TODO: Local storage is randomly pushing objects and I probably should find another solution
-//       to saving menus and items, but for now i'll focus on fixing it with the code that i have rn
-// TODO: Search for some issues with "to delete" counter
+//       (i have one)to saving menus and items, but for now i'll focus on fixing it with 
+//       the code that i have rn
 // TODO: Add footer
 
 import UserInput from "./components/UserInput";
@@ -16,6 +16,7 @@ import Save from "./components/Save";
 import CloseButton from "./components/CloseButton";
 import Notification from "./components/Notification";
 import ToDeleteCount from "./components/ToDeleteCount";
+import Footer from "./components/Footer";
 
 export const ThemeContext = createContext(null);
 
@@ -100,6 +101,17 @@ function App() {
     }
   };
 
+  const removeMarkedTasks = () => {
+    console.log(toDelete);
+    toDelete.forEach((item) => {
+      let task = document.getElementById(item.id);
+      let line = task.querySelector(".line");
+      line.style = "width: 0;"
+      task.style = "color: var(--body-color)";
+      task.setAttribute("data-done", "false");
+    })
+  }
+
   const handleClear = () => {
     if (
       currentListName === "" &&
@@ -148,28 +160,9 @@ function App() {
     if (displaySidebar) {
       hideSidebar();
       setDisplaySidebar((current) => !current);
-      // // document.getElementById("sidebar").style = "width: 0;";
-      // document.getElementById("sidebar").style = "width: 50px; opacity: 0;";
-
-      // //Button animation
-      // document.getElementById("first-block").style = "transform: rotate(0) ";
-      // document.getElementById("second-block").style = "transform: rotate(0) ";
-      // document.getElementById("hamburger").style = "transform: translateX(0);";
-      // setDisplaySidebar((current) => !current);
     } else {
       showSidebar();
       setDisplaySidebar((current) => !current);
-      // // document.getElementById("sidebar").style = "width: 500px;";
-      // document.getElementById("sidebar").style = "width: 500px; opacity: 1;";
-
-      // //Button animation
-      // document.getElementById("first-block").style =
-      //   "transform: rotate(45deg) translateY(9px)";
-      // document.getElementById("second-block").style =
-      //   "transform: rotate(-45deg) translateY(-9px)";
-      // document.getElementById("hamburger").style =
-      //   "transform: translateX(7px);";
-      // setDisplaySidebar((current) => !current);
     }
   };
 
@@ -213,6 +206,7 @@ function App() {
     }
     setCurrentListName(menuName);
     setToDelete([]);
+    removeMarkedTasks();
   };
 
   const handleSave = () => {
@@ -259,6 +253,7 @@ function App() {
 
     // Saving theme
     let getDefaultTheme = localStorage.getItem("theme");
+    console.log(getDefaultTheme);
     if (!getDefaultTheme) {
       localStorage.setItem("theme", "dark");
       getDefaultTheme = localStorage.getItem("theme");
@@ -278,6 +273,7 @@ function App() {
 
   return (
     // XDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
+
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
       <div className="app" id={theme}>
         <Notification message={message} />
@@ -316,9 +312,10 @@ function App() {
             </div>
           </div>
           <TodoList list={todoList} clickIsDone={handleIsDone} />
+          <Footer />
         </div>
         <ToDeleteCount toDelete={toDelete} todoList={todoList} />
-        <div className="gap"></div>
+        {/* <div className="gap"></div> */}
       </div>
     </ThemeContext.Provider>
   );
