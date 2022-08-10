@@ -5,7 +5,7 @@ import { v4 as uuid } from "uuid";
 // TODO: REFACTOR THIS UGLY PIECE OF C*DE!!!!! More of context api or try redux (?). I guess for such
 //       a small project it doesn't matter
 // TODO: Local storage is randomly pushing objects and I probably should find another solution
-//       (i have one)to saving menus and items, but for now i'll focus on fixing it with 
+//       (i have one)to saving menus and items, but for now i'll focus on fixing it with
 //       the code that i have rn
 // TODO: Add footer
 
@@ -44,6 +44,8 @@ function App() {
       setMessage({ msg: "Add task!", id: uuid() }); // testing
     }
     setNewTask("");
+    console.log("to delete", toDelete);
+    console.log("todo list", todoList);
   };
 
   const handleDeleteTask = () => {
@@ -83,14 +85,14 @@ function App() {
     let targetId = event.target.id;
 
     if (isDone === "false") {
-      event.target.querySelector(".line").style = "width: calc(100% + 0.8rem);";
+      event.target.querySelector(".line").style = "width: calc(100% + 0.8rem)";
       event.target.style = "color: var(--isdone-color)";
       setToDelete((current) => {
         return [...current, { id: targetId }];
       });
       event.target.setAttribute("data-done", "true");
     } else {
-      event.target.querySelector(".line").style = "width: 0;";
+      event.target.querySelector(".line").style = "width: 0";
       event.target.style = "color: var(--body-color)";
       setToDelete((current) =>
         current.filter((obj) => {
@@ -106,11 +108,11 @@ function App() {
     toDelete.forEach((item) => {
       let task = document.getElementById(item.id);
       let line = task.querySelector(".line");
-      line.style = "width: 0;"
+      line.style = "width: 0;";
       task.style = "color: var(--body-color)";
       task.setAttribute("data-done", "false");
-    })
-  }
+    });
+  };
 
   const handleClear = () => {
     if (
@@ -128,41 +130,6 @@ function App() {
       setToDelete([]);
       document.getElementById("list-title").textContent = "";
       setMessage({ msg: "Cleared!", id: uuid() }); // testing
-    }
-  };
-
-  const hideSidebar = () => {
-    // document.getElementById("sidebar").style = "width: 0;";
-    document.getElementById("sidebar").style = "width: 50px; opacity: 0;";
-    document.getElementById("swipe-overlay").style = "width: 50px; z-index: 3;";
-
-    //Button animation
-    document.getElementById("first-block").style = "transform: rotate(0) ";
-    document.getElementById("second-block").style = "transform: rotate(0) ";
-    document.getElementById("hamburger").style = "transform: translateX(0);";
-  };
-
-  const showSidebar = () => {
-    // document.getElementById("sidebar").style = "width: 500px;";
-    document.getElementById("sidebar").style = "width: 500px; opacity: 1;";
-    document.getElementById("swipe-overlay").style = "width: 0; z-index: 0;";
-
-    //Button animation
-    document.getElementById("first-block").style =
-      "transform: rotate(45deg) translateY(9px)";
-    document.getElementById("second-block").style =
-      "transform: rotate(-45deg) translateY(-9px)";
-    document.getElementById("hamburger").style = "transform: translateX(7px);";
-  };
-
-  // Sidebar
-  const toggleSidebar = () => {
-    if (displaySidebar) {
-      hideSidebar();
-      setDisplaySidebar((current) => !current);
-    } else {
-      showSidebar();
-      setDisplaySidebar((current) => !current);
     }
   };
 
@@ -272,22 +239,21 @@ function App() {
   }, [todoList]);
 
   return (
-    // XDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD
-
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
       <div className="app" id={theme}>
         <Notification message={message} />
-        <CloseButton toggleSidebar={toggleSidebar} />
+        <CloseButton
+          setDisplaySidebar={setDisplaySidebar}
+          displaySidebar={displaySidebar}
+        />
         <Sidebar
-          menuStorage={storageList}
-          getLocal={getLocalTaskList}
-          current={displayCurrentList}
-          remove={removeLocalTaskList}
-          changeSaveName={setMenuName}
+          storageList={storageList}
+          displayCurrentList={displayCurrentList}
+          removeLocalTaskList={removeLocalTaskList}
+          setMenuName={setMenuName}
           setMessage={setMessage}
           setDisplaySidebar={setDisplaySidebar}
-          showSidebar={showSidebar}
-          hideSidebar={hideSidebar}
+          displaySidebar={displaySidebar}
         />
 
         <div id="todo-wrapper" className="wrapper">
@@ -295,27 +261,26 @@ function App() {
             <h1 className="section-header">TODO:</h1>
             <div className="input-wrapper">
               <Save
-                nameChange={handleNameChange}
-                value={menuName} // testing
-                save={handleSave}
-                focus={handleFocus}
+                handleNameChange={handleNameChange}
+                menuName={menuName} // testing
+                handleSave={handleSave}
+                handleFocus={handleFocus}
               />
 
               <UserInput
-                inputChange={handleInputChange}
-                value={newTask} // testing
-                add={handleAddTask}
-                del={handleDeleteTask}
-                clear={handleClear}
+                handleInputChange={handleInputChange}
+                newTask={newTask} // testing
+                handleAddTask={handleAddTask}
+                handleDeleteTask={handleDeleteTask}
+                handleClear={handleClear}
                 message={message}
               />
             </div>
           </div>
-          <TodoList list={todoList} clickIsDone={handleIsDone} />
-          <Footer />
+          <TodoList todoList={todoList} handleIsDone={handleIsDone} />
         </div>
         <ToDeleteCount toDelete={toDelete} todoList={todoList} />
-        {/* <div className="gap"></div> */}
+        <Footer />
       </div>
     </ThemeContext.Provider>
   );

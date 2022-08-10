@@ -5,29 +5,25 @@ export default function TodoList(props) {
     <div className="bottom">
       <div className="tasks-container">
         <p id="list-title" className="list-title section-header"></p>
-        {
-        props.list.length === 0 ? (
-          <div
-            className="empty"
-          >
-            Nothing is here..
-          </div>
+        {props.todoList.length === 0 ? (
+          <div className="empty">Nothing is here..</div>
         ) : (
-          props.list.map((item) => (
-            item.task != null &&
-            <div
-              data-done="false"
-              key={item.id}
-              id={item.id}
-              className="task"
-              onClick={props.clickIsDone}
-            >
-              - {item.task}
-              <div className="line"></div>
-            </div>
-          ))
-        )
-        }
+          props.todoList.map(
+            (item) =>
+              item.task != null && (
+                <div
+                  data-done="false"
+                  key={item.id}
+                  id={item.id}
+                  className="task"
+                  onClick={props.handleIsDone}
+                >
+                  - {item.task}
+                  <div className="line"></div>
+                </div>
+              )
+          )
+        )}
       </div>
     </div>
   );

@@ -9,29 +9,29 @@ export default function UserInput(props) {
       <input
         id="task"
         className="user-input"
-        onChange={props.inputChange}
-        value={props.value}
+        onChange={props.handleInputChange}
+        value={props.newTask}
         placeholder="Task.."
       />
       <div className="btn-wrapper">
         <button
           id="btn"
           className="task-btn add"
-          onClick={props.add}
+          onClick={props.handleAddTask}
           aria-label="Add task"
         >
           <FontAwesomeIcon icon={faPlusSquare} size="2xl" />
         </button>
         <button
           className="task-btn delete"
-          onClick={props.del}
+          onClick={props.handleDeleteTask}
           aria-label="Delete task"
         >
           <FontAwesomeIcon icon={faMinusSquare} size="2xl" />
         </button>
         <button
           className="task-btn clear"
-          onClick={props.clear}
+          onClick={props.handleClear}
           aria-label="Clear"
         >
           <FontAwesomeIcon icon={faDeleteLeft} size="2xl" />

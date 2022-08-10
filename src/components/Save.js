@@ -9,15 +9,15 @@ export default function Save(props) {
         <input
           id="save"
           className="save-input"
-          onChange={props.nameChange}
-          value={props.value}
-          onFocus={props.focus}
+          onChange={props.handleNameChange}
+          value={props.menuName}
+          onFocus={props.handleFocus}
           placeholder="List name.."
         />
         <button
           className="save-btn"
           onClick={() => {
-            props.save();
+            props.handleSave();
           }}
           aria-label="Save list"
         >
