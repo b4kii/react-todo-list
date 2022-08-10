@@ -1,3 +1,3 @@
 ### Todo list with react
-![Example](dark-todo.png)
-![Example](light-todo.png)
+![Example](dark-mode.png)
+![Example](light-mode.png)
