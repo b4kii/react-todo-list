@@ -10,7 +10,6 @@ export default function Footer() {
     const date = new Date();
     const yearFromDate = date.getFullYear();
     setYear(yearFromDate);
-    console.log(yearFromDate);
   }, []);
 
   return (

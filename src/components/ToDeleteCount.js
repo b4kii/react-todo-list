@@ -9,7 +9,9 @@ export default function ToDeleteCount({ toDelete, todoList }) {
   }, [toDelete]);
 
   return (
-    toDelete.length !== 0 && (
+    toDelete.length !== 0 &&
+    todoList.length !== 0 &&
+     (
       <div className="to-delete-counter" key={changeId}>
         {toDelete.length}/{todoList.length}
       </div>

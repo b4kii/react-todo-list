@@ -2,12 +2,9 @@ import React from "react";
 import { useState, useEffect, createContext } from "react";
 import { v4 as uuid } from "uuid";
 
-// TODO: REFACTOR THIS UGLY PIECE OF C*DE!!!!! More of context api or try redux (?). I guess for such
-//       a small project it doesn't matter
-// TODO: Local storage is randomly pushing objects and I probably should find another solution
-//       (i have one)to saving menus and items, but for now i'll focus on fixing it with
-//       the code that i have rn
-// TODO: Add footer
+// TODO: REFACTOR THIS UGLY PIECE OF C*DE!!!!!
+// TODO: Local storage is pushing things randomly, have to change way of saving todo list.
+//       I have an idea how to solve this, but i don't have time
 
 import UserInput from "./components/UserInput";
 import TodoList from "./components/TodoList";
@@ -44,8 +41,6 @@ function App() {
       setMessage({ msg: "Add task!", id: uuid() }); // testing
     }
     setNewTask("");
-    console.log("to delete", toDelete);
-    console.log("todo list", todoList);
   };
 
   const handleDeleteTask = () => {
@@ -74,12 +69,6 @@ function App() {
     }
   };
 
-  const handleEnterPress = (event) => {
-    if (event.key === "Enter") {
-      document.getElementById("btn").click();
-    }
-  };
-
   const handleIsDone = (event) => {
     let isDone = event.target.getAttribute("data-done");
     let targetId = event.target.id;
@@ -103,8 +92,13 @@ function App() {
     }
   };
 
-  const removeMarkedTasks = () => {
-    console.log(toDelete);
+  const handleEnterPress = (event) => {
+    if (event.key === "Enter") {
+      document.getElementById("btn").click();
+    }
+  };
+
+  const removeCheckMark = () => {
     toDelete.forEach((item) => {
       let task = document.getElementById(item.id);
       let line = task.querySelector(".line");
@@ -141,8 +135,7 @@ function App() {
   };
 
   const getLocalTaskList = (menuName) => {
-    const data = JSON.parse(localStorage.getItem(menuName));
-    return data;
+    return JSON.parse(localStorage.getItem(menuName));
   };
 
   const removeLocalTaskList = (menuName) => {
@@ -156,7 +149,7 @@ function App() {
     const keys = Object.keys(localStorage);
     setStorageList(() =>
       keys.filter((key) => {
-        return key !== "theme";
+        return key !== "theme" && key !== "menus";
       })
     );
   };
@@ -172,20 +165,22 @@ function App() {
       setTodoList(list);
     }
     setCurrentListName(menuName);
+    removeCheckMark();
     setToDelete([]);
-    removeMarkedTasks();
   };
 
   const handleSave = () => {
     const test = getLocalTaskList(menuName);
 
     if (menuName !== "" && todoList.length !== 0 && test === null) {
+      // setTemp(current => ({menuName: menuName, ...current}))
       saveLocalTaskList(menuName); // testing
       setNewTask(""); // testing
       setMenuName(""); // testing
       setMessage({ msg: `Saved: ${menuName}`, id: uuid() }); // testing
       getLocalStorage();
       setTodoList([]);
+      setToDelete([]);
     }
 
     if (test !== null) {
@@ -220,7 +215,6 @@ function App() {
 
     // Saving theme
     let getDefaultTheme = localStorage.getItem("theme");
-    console.log(getDefaultTheme);
     if (!getDefaultTheme) {
       localStorage.setItem("theme", "dark");
       getDefaultTheme = localStorage.getItem("theme");
@@ -277,7 +271,10 @@ function App() {
               />
             </div>
           </div>
-          <TodoList todoList={todoList} handleIsDone={handleIsDone} />
+          <TodoList todoList={todoList} 
+          // setToDelete={setToDelete} 
+          handleIsDone={handleIsDone}
+          />
         </div>
         <ToDeleteCount toDelete={toDelete} todoList={todoList} />
         <Footer />
