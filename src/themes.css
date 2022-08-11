@@ -1,0 +1,32 @@
+#dark {
+  --body-color: white;
+  --body-background-color: #181818;
+  --sidebar-background-color: #101010;
+  --sidebar-button-color: white;
+  --sidebar-border-color: #202020;
+  --sidebar-menu-item-hover-color: #282828;
+  --heading-color: #f0e68c;
+  --input-focus-color: #232323;
+  --hover-color: orange;
+  --hovert-task-color: grey;
+  --line-color: white;
+  --empty-color: #333333;
+  --isdone-color: grey;
+}
+
+
+#light {
+  --body-color: black;
+  --body-background-color: #f5dfa8;
+  --sidebar-background-color: #e0c476;
+  --sidebar-button-color: black;
+  --sidebar-border-color: #ac9c76;
+  --sidebar-menu-item-hover-color: #f0d691;
+  --heading-color: red;
+  --input-focus-color: #fcdd87;
+  --hover-color: salmon;
+  --hover-task-color: grey;
+  --line-color: black;
+  --empty-color: #b4a873;
+  --isdone-color: grey;
+}
