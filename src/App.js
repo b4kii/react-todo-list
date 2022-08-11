@@ -2,7 +2,6 @@ import React from "react";
 import { useState, useEffect, createContext } from "react";
 import { v4 as uuid } from "uuid";
 
-// TODO: REFACTOR THIS UGLY PIECE OF C*DE!!!!!
 // TODO: Local storage is pushing things randomly, have to change way of saving todo list.
 //       I have an idea how to solve this, but i don't have time
 
@@ -18,14 +17,14 @@ import Footer from "./components/Footer";
 export const ThemeContext = createContext(null);
 
 function App() {
-  const [todoList, setTodoList] = useState([]);
   const [newTask, setNewTask] = useState("");
+  const [todoList, setTodoList] = useState([]);
   const [toDelete, setToDelete] = useState([]);
   const [displaySidebar, setDisplaySidebar] = useState(false);
   const [menuName, setMenuName] = useState("");
   const [storageList, setStorageList] = useState([]);
   const [currentListName, setCurrentListName] = useState("");
-  const [message, setMessage] = useState({});
+  const [message, setMessage] = useState({ msg: "", id: "" });
 
   const [theme, setTheme] = useState("");
 
@@ -38,7 +37,7 @@ function App() {
     if (newTask !== "") {
       setTodoList((current) => [...current, { task: newTask, id: uuid() }]);
     } else {
-      setMessage({ msg: "Add task!", id: uuid() }); // testing
+      setMessage({ msg: "Add task!", id: uuid() });
     }
     setNewTask("");
   };
@@ -115,7 +114,7 @@ function App() {
       newTask === "" &&
       todoList.length === 0
     ) {
-      setMessage({ msg: "Nothing to clear!", id: uuid() }); // testing
+      setMessage({ msg: "Nothing to clear!", id: uuid() });
     } else {
       setCurrentListName("");
       setMenuName("");
@@ -123,14 +122,14 @@ function App() {
       setTodoList([]);
       setToDelete([]);
       document.getElementById("list-title").textContent = "";
-      setMessage({ msg: "Cleared!", id: uuid() }); // testing
+      setMessage({ msg: "Cleared!", id: uuid() });
     }
   };
 
   // Saving list
   const saveLocalTaskList = (menuName) => {
     if (menuName !== "") {
-      localStorage.setItem(menuName, JSON.stringify([...todoList]));
+      localStorage.setItem(menuName, JSON.stringify(todoList));
     }
   };
 
@@ -142,7 +141,7 @@ function App() {
     localStorage.removeItem(menuName);
     document.getElementById("list-title").textContent = "";
     getLocalStorage();
-    setMessage({ msg: `Removed: ${currentListName}`, id: uuid() }); // testing
+    setMessage({ msg: `Removed: ${currentListName}`, id: uuid() });
   };
 
   const getLocalStorage = () => {
@@ -174,10 +173,10 @@ function App() {
 
     if (menuName !== "" && todoList.length !== 0 && test === null) {
       // setTemp(current => ({menuName: menuName, ...current}))
-      saveLocalTaskList(menuName); // testing
-      setNewTask(""); // testing
-      setMenuName(""); // testing
-      setMessage({ msg: `Saved: ${menuName}`, id: uuid() }); // testing
+      saveLocalTaskList(menuName);
+      setNewTask("");
+      setMenuName("");
+      setMessage({ msg: `Saved: ${menuName}`, id: uuid() });
       getLocalStorage();
       setTodoList([]);
       setToDelete([]);
@@ -188,10 +187,10 @@ function App() {
     }
 
     if (menuName === "") {
-      setMessage({ msg: "Provide list name!", id: uuid() }); // testing
+      setMessage({ msg: "Provide list name!", id: uuid() });
     }
     if (todoList.length === 0) {
-      setMessage({ msg: "Task list is empty!", id: uuid() }); // testing
+      setMessage({ msg: "Task list is empty!", id: uuid() });
     }
   };
 
@@ -216,7 +215,7 @@ function App() {
     // Saving theme
     let getDefaultTheme = localStorage.getItem("theme");
     if (!getDefaultTheme) {
-      localStorage.setItem("theme", "dark");
+      localStorage.settem("theme", "dark");
       getDefaultTheme = localStorage.getItem("theme");
       setTheme(getDefaultTheme);
     }
@@ -256,14 +255,14 @@ function App() {
             <div className="input-wrapper">
               <Save
                 handleNameChange={handleNameChange}
-                menuName={menuName} // testing
+                menuName={menuName}
                 handleSave={handleSave}
                 handleFocus={handleFocus}
               />
 
               <UserInput
                 handleInputChange={handleInputChange}
-                newTask={newTask} // testing
+                newTask={newTask}
                 handleAddTask={handleAddTask}
                 handleDeleteTask={handleDeleteTask}
                 handleClear={handleClear}
@@ -271,9 +270,10 @@ function App() {
               />
             </div>
           </div>
-          <TodoList todoList={todoList} 
-          // setToDelete={setToDelete} 
-          handleIsDone={handleIsDone}
+          <TodoList
+            todoList={todoList}
+            // setToDelete={setToDelete}
+            handleIsDone={handleIsDone}
           />
         </div>
         <ToDeleteCount toDelete={toDelete} todoList={todoList} />

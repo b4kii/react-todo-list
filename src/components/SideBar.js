@@ -60,7 +60,7 @@ export default function SideBar(props) {
               key={uuid()}
               onClick={() => {
                 props.displayCurrentList(menuName);
-                props.setMessage({ msg: `Selected: ${menuName}`, id: uuid() }); // testing
+                props.setMessage({ msg: `Selected: ${menuName}`, id: uuid() });
                 props.setMenuName("");
 
                 document.getElementById(
