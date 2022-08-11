@@ -2,8 +2,8 @@ import React from "react";
 import { useState, useEffect, createContext } from "react";
 import { v4 as uuid } from "uuid";
 
-// TODO: Local storage is pushing things randomly, have to change way of saving todo list.
-//       I have an idea how to solve this, but i don't have time
+// TODO: Local storage is pushing things randomly,so I have to change way of saving todo list.
+//       I have an idea how to solve this, but I don't have time.
 
 import UserInput from "./components/UserInput";
 import TodoList from "./components/TodoList";
