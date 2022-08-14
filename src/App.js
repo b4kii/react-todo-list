@@ -28,6 +28,11 @@ function App() {
 
   const [theme, setTheme] = useState("");
 
+  const [test, setTest] = useState({
+    menu: "",
+    tasks: []
+  });
+
   // User input
   const handleInputChange = (event) => {
     setNewTask(event.target.value);
@@ -36,6 +41,13 @@ function App() {
   const handleAddTask = () => {
     if (newTask !== "") {
       setTodoList((current) => [...current, { task: newTask, id: uuid() }]);
+      setTest(current => ({
+        men: menuName,
+        tasks: [
+          ...current.tasks,
+          {task: "newTask", id: uuid()}
+        ]
+      }));
     } else {
       setMessage({ msg: "Add task!", id: uuid() });
     }
@@ -124,6 +136,7 @@ function App() {
       document.getElementById("list-title").textContent = "";
       setMessage({ msg: "Cleared!", id: uuid() });
     }
+    console.log(test);
   };
 
   // Saving list
@@ -215,7 +228,7 @@ function App() {
     // Saving theme
     let getDefaultTheme = localStorage.getItem("theme");
     if (!getDefaultTheme) {
-      localStorage.settem("theme", "dark");
+      localStorage.setItem("theme", "dark");
       getDefaultTheme = localStorage.getItem("theme");
       setTheme(getDefaultTheme);
     }
@@ -274,6 +287,7 @@ function App() {
             todoList={todoList}
             // setToDelete={setToDelete}
             handleIsDone={handleIsDone}
+            setTodoList={setTodoList}
           />
         </div>
         <ToDeleteCount toDelete={toDelete} todoList={todoList} />

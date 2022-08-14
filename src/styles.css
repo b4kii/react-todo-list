@@ -75,10 +75,6 @@
   background-color: var(--input-focus-color);
 }
 
-.task:hover {
-  color: var(--isdone-color) !important;
-}
-
 .task-btn,
 .save-btn {
   cursor: pointer;
@@ -157,9 +153,43 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 90%;
   gap: 1.2rem;
   margin: auto;
 }
+
+/* .task-wrapper {
+  width: 50%;
+  display: flex;
+  animation: appear 0.5s ease-in-out;
+  position: relative;
+  cursor: pointer;
+  border: 1px solid black;
+}
+
+.task-button {
+  position: absolute;
+  background: none;
+  border: none;
+  right: -4rem;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  width: 0;
+  overflow: hidden;
+  transform: scale(0);
+  transition: width 200ms, transform 200ms;
+  cursor: pointer;
+}
+
+.done {
+  right: -2rem;
+}
+
+.task-wrapper:hover > button {
+  width: 50px;
+  transform: scale(1); 
+} */
 
 .task {
   text-align: center;
@@ -172,6 +202,15 @@
   overflow-wrap: break-word;
   word-wrap: break-word;
   word-break: break-all;
+}
+
+/* .task:focus {
+  outline: none;
+  background-color: gray;
+} */
+
+.task:hover {
+  color: var(--isdone-color) !important;
 }
 
 .line {
