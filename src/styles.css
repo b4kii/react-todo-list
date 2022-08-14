@@ -21,6 +21,7 @@
   background-color: var(--body-background-color);
   min-height: 100vh;
   color: var(--body-color);
+  overflow-x: hidden;
 }
 
 /* Todo section */
@@ -156,7 +157,7 @@
   width: 90%;
   gap: 1.2rem;
   margin: auto;
-  overflow-x: hidden;
+  /* overflow-x: hidden; */
 }
 
 /* .task-wrapper {
